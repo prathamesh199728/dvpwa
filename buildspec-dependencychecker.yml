@@ -1,0 +1,27 @@
+---
+version: 0.2
+
+phases:
+  install:
+    commands:
+      - wget https://dl.bintray.com/jeremy-long/owasp/dependency-check-5.3.0-release.zip
+      - unzip dependency-check-*
+      - export PATH=dependency-check/bin:$PATH
+      - npm install
+  build:
+    commands:
+      - mkdir -p nvd  # Will store nvd here
+      - |
+        dependency-check.sh \
+          --project dvpwa \
+          -s . \
+          -f JUNIT \
+          --disableNuspec \
+          --disableAssembly \
+          -d nvd \
+         # --failOnCVSS $FAIL_ON_CVSS        
+# Caching the nvd database so each run doesn't download the
+# entire nvd
+cache:
+  paths:
+    - nvd/**/*
