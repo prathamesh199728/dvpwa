@@ -27,7 +27,7 @@ phases:
         \"build_id\": env.CODEBUILD_BUILD_ID, \
         \"source_commitid\": env.CODEBUILD_RESOLVED_SOURCE_VERSION, \
         \"report\": . }" dependency-check-report.json > payload.json 
-
+      - |
 artifacts:
   type: zip
   files: '**/*'
